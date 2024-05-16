@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Alternate background colors for list items */
+        ul li:nth-child(odd) {
+            background-color: white;
+        }
+        ul li:nth-child(even) {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>My super nifty to-do list</h1>
+    <ul id="list"></ul>
+    <div>
+        <input type="text" id="item" placeholder="Enter an item">
+        <button id="add">Add</button>
+        <button id="remove">Remove</button>
+    </div>
+
+    <script>
+        const list = document.getElementById('list');
+        const itemInput = document.getElementById('item');
+        const addButton = document.getElementById('add');
+        const removeButton = document.getElementById('remove');
+
+        const items = [];
+
+        addButton.addEventListener('click', () => {
+            const newItem = itemInput.value.trim().toLowerCase();
+            if (newItem) {
+                items.push(newItem);
+                updateList();
+                itemInput.value = '';
+            }
+        });
+
+        removeButton.addEventListener('click', () => {
+            const textToRemove = itemInput.value.trim().toLowerCase();
+            const items = list.getElementsByTagName('li');
+            for (const item of items) {
+                const itemText = item.textContent.toLowerCase();
+                if (itemText.includes(textToRemove)) {
+                    list.removeChild(item);
+                    break; 
+                }
+                itemInput.value = '';
+            }
+        });
+
+        function updateList() {
+            list.innerHTML = '';
+            items.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
+
